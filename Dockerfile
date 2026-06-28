@@ -1,21 +1,20 @@
-# Remplacer la ligne 1 par ce tag officiel qui contient PHP 8.3 stable :
-FROM richarvey/nginx-php-fpm:latest
+# Utiliser l'image Debian officielle (Évite le bug "Operation not permitted" de Render)
+FROM webdevops/php-nginx:8.3
 
+# Définir le dossier de travail
+WORKDIR /app
+
+# Copier tous les fichiers du projet (y compris public/build compilé localement)
 COPY . .
 
-# Configuration du serveur
-ENV SKIP_COMPOSER 1
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV RUN_SCRIPTS 1
-ENV REAL_IP_HEADER 1
+# Autoriser Composer en mode super-utilisateur
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# Configuration Laravel en production
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV LOG_CHANNEL stderr
+# Configurer le dossier racine de Nginx pour pointer sur le dossier /public de Laravel
+ENV WEB_DOCUMENT_ROOT=/app/public
 
-# Autoriser Composer à tourner en administrateur
-ENV COMPOSER_ALLOW_SUPERUSER 1
+# Installer les dépendances PHP pendant la phase de BUILD (garantit la présence de vendor/autoload.php)
+RUN composer install --no-dev --optimize-autoloader
 
-CMD ["/start.sh"]
+# Configurer les permissions d'écriture pour Laravel
+RUN chown -R application:application /app/storage /app/bootstrap/cache
