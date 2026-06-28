@@ -1,4 +1,5 @@
-FROM tangramor/nginx-php8-fpm:php8.3.12_node20.18.0
+# Remplacer la ligne 1 par ce tag officiel existant :
+FROM tangramor/nginx-php8-fpm:php8.3.8_node22.4.0
 
 COPY . .
 
