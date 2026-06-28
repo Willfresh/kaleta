@@ -1,4 +1,4 @@
-FROM richarvey/nginx-php-fpm:3.1.6
+FROM tangramor/nginx-php8-fpm:php8.3.12_node20.18.0
 
 COPY . .
 
