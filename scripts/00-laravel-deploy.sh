@@ -2,10 +2,6 @@
 echo "Installation des dépendances PHP..."
 composer install --no-dev --working-dir=/var/www/html
 
-echo "Compilation des assets (Vite / Vue 3)..."
-npm install
-npm run build
-
 echo "Optimisation des caches..."
 php artisan config:cache
 php artisan route:cache
