@@ -1,5 +1,5 @@
-# Remplacer la ligne 1 par ce tag officiel sécurisé pour PHP 8.3 :
-FROM richarvey/nginx-php-fpm:php83
+# Remplacer la ligne 1 par ce tag officiel qui contient PHP 8.3 stable :
+FROM richarvey/nginx-php-fpm:latest
 
 COPY . .
 
